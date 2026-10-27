@@ -28,14 +28,16 @@ rsync -a \
   --exclude node_modules --exclude .env --exclude tmp-test --exclude '._*' --exclude .DS_Store \
   "$ROOT/frame_art_manager/" "$STAGE/"
 
-# Rebrand the copy only; the repo's config.yaml stays identical to upstream
-sed -i '' \
+# Rebrand the copy only; the repo's config.yaml stays identical to upstream.
+# No `sed -i`: its syntax differs between macOS and Linux, and this runs on both.
+sed \
   -e 's/^name: .*/name: Frame Art Manager (DEV)/' \
   -e 's/^slug: .*/slug: frame_art_manager_dev/' \
   -e 's/^panel_title: .*/panel_title: Frame Art (DEV)/' \
   -e 's|^  frame_art_path: /config/www/frame_art$|  frame_art_path: /config/www/frame_art_dev|' \
   -e 's|^  8099/tcp: 8099$|  8099/tcp: 8098|' \
-  "$STAGE/config.yaml"
+  "$STAGE/config.yaml" > "$STAGE/config.yaml.dev"
+mv "$STAGE/config.yaml.dev" "$STAGE/config.yaml"
 grep -q '^slug: frame_art_manager_dev$' "$STAGE/config.yaml"
 
 echo "Copying to $HA_HOST:$DEST ..."
