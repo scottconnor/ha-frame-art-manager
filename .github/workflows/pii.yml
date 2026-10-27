@@ -7,4 +7,7 @@ jobs:
       - uses: actions/checkout@v5
         with:
           fetch-depth: 0
+          # on a pull request, the PR head: the default is GitHub's synthetic merge commit, authored as
+          # the actor's account email, which is in no real history and fails the identity check
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - run: python3 scripts/check_no_pii.py
