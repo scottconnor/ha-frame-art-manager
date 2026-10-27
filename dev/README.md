@@ -25,11 +25,15 @@ cd ~/frame-art-manager
 
 ## Testing a change on Home Assistant
 
-From the repo folder on the Mac, no commit needed:
+From the repo folder, on the Mac or on the dev server (`~/frame-art-manager`), no commit
+needed:
 
 ```bash
 dev/deploy-ha-dev.sh
 ```
+
+It sends the files as they are in that folder, so check out the branch you want to test
+first.
 
 It copies `frame_art_manager/` to HA as the DEV add-on and rebuilds it. Then start it,
 or open it, from **Settings > Add-ons > Frame Art Manager (DEV)**. The script only
@@ -107,6 +111,10 @@ Oct 2026, which is why the fork and upstream once shared no commits).
 
 - **SSH aliases** in `~/.ssh/config`, each with its own key: `ssh mintvm` (dev server) and
   `ssh homeassistant` (HA's Terminal & SSH add-on). The deploy script uses the HA one.
+- **HA key on each machine that deploys**: the script reads `~/.ssh/id_ed25519_homeassistant`
+  (override with `HA_SSH_KEY`). The Mac and the dev server each have their own key with that
+  name, both listed in the Terminal & SSH add-on's `authorized_keys`; set `HA_HOST` /
+  `HA_PORT` if the defaults (`homeassistant.local`, 22) don't reach HA from that machine.
 - **HA Terminal & SSH add-on**: the deploy key is authorized and its port is mapped. Its boot
   is manual: **after an HA reboot, start it again** or the deploy script can't connect.
 - **DEV add-on**: the first time, the script copies files and asks you to install
