@@ -35,6 +35,7 @@ EXCLUDED_PATHS = (
 )
 ALLOWED_IDENTITIES = {
     "71735642+billyfw@users.noreply.github.com",  # the owner's GitHub noreply address (every commit since the 2026-10-24 rewrite)
+    "444234+scottconnor@users.noreply.github.com",  # a fork contributor's GitHub noreply address, the identity their commits carry
     "noreply@github.com",  # GitHub's own web merges
     "noreply@anthropic.com",  # the coding assistant's Co-Authored-By line
 }
